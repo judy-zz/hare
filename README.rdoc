@@ -1,0 +1,15 @@
+= Hare
+
+A Rails plugin that makes it easier for your models to communicate with RabbitMQ.
+
+== How do I RabbitMQ?
+
+Put this in your `Gemfile`:
+
+    gem 'hare'
+
+Then run `bundle install` to install the gem and its dependencies. Finally, run `rails generate hare:install` to create a hare initializer and an amqp.yml file in your config folder.
+
+---
+
+This project was written by Clinton Judy, and it uses the ISC license.
