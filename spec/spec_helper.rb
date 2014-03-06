@@ -1,21 +1,21 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  add_filter "spec/dummy"
+end
 
+# This loads the dummy Rails environment.
 require File.expand_path('../dummy/config/environment', __FILE__)
-require 'rspec/rails'
 
 RSpec.configure do |config|
-  config.filter_run :focus
-  config.run_all_when_everything_filtered = true
-
   if config.files_to_run.one?
     config.full_backtrace = true
     config.formatter = 'doc' if config.formatters.none?
   end
 
-  config.profile_examples = 10
+  # # Turn this on to profile the slowest tests.
+  # config.profile_examples = 10
 
   config.order = :random
   Kernel.srand config.seed
