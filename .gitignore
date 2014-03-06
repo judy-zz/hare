@@ -1,9 +1,28 @@
+# App generated
 .bundle/
 log/*.log
 pkg
-coverage/
+
+# Rails specific
 spec/dummy/db/*.sqlite3
 spec/dummy/db/*.sqlite3-journal
 spec/dummy/log/*.log
 spec/dummy/tmp/
 spec/dummy/.sass-cache
+
+# Test generated
+coverage/
+rails_best_practices_output.html
+spec/reports/
+
+# OS stuff
+.DS_Store
+.env
+
+# IDE generated stuff
+.gemtags
+.tags
+.tags_sorted_by_file
+.idea/*
+atlassian-ide-plugin.xml
+.project
