@@ -60,7 +60,7 @@ GEM
       rspec (>= 2.14, < 4.0)
     hike (1.2.3)
     i18n (0.6.9)
-    listen (2.6.2)
+    listen (2.7.0)
       celluloid (>= 0.15.2)
       celluloid-io (>= 0.15.0)
       rb-fsevent (>= 0.9.3)
