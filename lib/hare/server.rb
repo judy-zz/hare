@@ -1,5 +1,3 @@
-require 'logger'
-
 module Hare
   class Server
     attr_reader :status, :connection
@@ -10,20 +8,18 @@ module Hare
 
     def cleanup
       @connection.try(:close)
+      @status = "off" if @connection.nil?
     end
 
     def capture_signals
-      trap('TERM') do
-        say 'Exiting...'
-        cleanup
-        stop
-      end
+      trap('TERM') { close }
+      trap('INT') { close }
+    end
 
-      trap('INT') do
-        say 'Exiting...'
-        cleanup
-        stop
-      end
+    def close
+      puts 'Exiting...'
+      cleanup
+      exit
     end
 
     def open_connection
@@ -38,7 +34,7 @@ module Hare
       @status = "started"
 
       loop do
-
+        # TODO: Ensure the connection stays open, and re-open it if it closes. Or fail loudly.
       end
     end
   end
