@@ -8,6 +8,8 @@ end
 # This loads the dummy Rails environment.
 require File.expand_path('../dummy/config/environment', __FILE__)
 
+require 'hare'
+
 RSpec.configure do |config|
   if config.files_to_run.one?
     config.full_backtrace = true
