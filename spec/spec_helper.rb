@@ -9,10 +9,9 @@ end
 require File.expand_path('../dummy/config/environment', __FILE__)
 
 RSpec.configure do |config|
-  
   if config.files_to_run.one?
     config.full_backtrace = true
-    config.formatter = 'documentation' if config.formatters.none?
+    # config.formatter = 'documentation' if config.formatters.none?
   end
 
   # # Turn this on to profile the slowest tests.
