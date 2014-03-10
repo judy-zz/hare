@@ -1,0 +1,8 @@
+Description:
+    This generator installs a message inside app/messages, to send messages to RabbitMQ.
+
+Example:
+    rails generate message WeatherReport
+
+    This will create:
+        app/messages/weather_report.rb

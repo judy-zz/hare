@@ -1,0 +1,24 @@
+defaults: &defaults
+  logging: false
+  connection_timeout: 5
+  host: 54.193.23.67
+  port: 5672
+  exchange: "agrian.topic"
+  heartbeat: 1
+  user: guest
+  pass: guest
+
+test:
+  <<: *defaults
+  vhost: "/agrian-test"
+  exchange: "agrian-test.topic"
+
+development:
+  <<: *defaults
+  vhost: "/agrian-development"
+  exchange: "agrian-development.topic"
+
+production:
+  <<: *defaults
+  vhost: "/agrian-production"
+  exchange: "agrian-production.topic"

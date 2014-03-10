@@ -1,0 +1,9 @@
+Description:
+    This generator installs the necessary files to get Hare going.
+
+Example:
+    rails generate hare
+
+    This will create:
+        config/amqp.yml
+        config/initializers/hare.rb
