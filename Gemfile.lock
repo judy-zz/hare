@@ -140,6 +140,7 @@ GEM
     thread_safe (0.2.0)
       atomic (>= 1.1.7, < 2)
     tilt (1.4.1)
+    timecop (0.7.1)
     timers (1.1.0)
     treetop (1.4.15)
       polyglot
@@ -159,3 +160,4 @@ DEPENDENCIES
   rspec (~> 3.0.0.beta1)
   simplecov
   sqlite3
+  timecop

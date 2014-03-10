@@ -1,6 +1,6 @@
 describe Hare::Server do
+  before { @server = Hare::Server.new }
   describe '#status' do
-    before { @server = Hare::Server.new }
     context 'when the server is started' do
       it "returns 'started'" do
         thread = Thread.new { @server.start }
@@ -16,21 +16,43 @@ describe Hare::Server do
     end
   end
 
+  describe "#say" do
+    it "sends the message to standard out if @quiet is false" do
+      @server.instance_variable_set(:@quiet, false)
+      expect(STDOUT).to receive(:puts).with("test")
+      @server.say("test")
+    end
+
+    it "sends the message to the log file" do
+      Timecop.freeze do
+        expect(Rails.logger).to receive(:add).with(1, "#{Time.now.strftime('%FT%T%z')}: test")
+        @server.say("test")
+      end
+    end
+  end
+
   describe "#capture_signals" do
-    it "should capture 'TERM'" do
-      @server = Hare::Server.new
-      expect(@server).to receive(:cleanup)
+    it "captures 'TERM'" do
       pid = fork do
+        expect(@server).to receive(:cleanup)
         @server.start
       end
       sleep(0.1)
       Process.kill("TERM", pid)
     end
+
+    it "captures 'INT'" do
+      pid = fork do
+        expect(@server).to receive(:cleanup)
+        @server.start
+      end
+      sleep(0.1)
+      Process.kill("INT", pid)
+    end
   end
 
   describe "#start" do
     it "opens a connection to rabbitmq" do
-      @server = Hare::Server.new
       thread = Thread.new { @server.start }
       sleep(0.1)
       expect(@server.connection).to be_kind_of(Bunny::Session)
