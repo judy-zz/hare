@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(/spec\//)
   s.require_paths = %w[lib]
 
-  s.add_dependency 'railties', '~> 4.0.3'
+  s.add_dependency 'railties', '~> 4.0'
   s.add_dependency 'bunny', '~> 1.1.3'
 
   s.add_development_dependency 'sqlite3'
