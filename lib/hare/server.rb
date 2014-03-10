@@ -22,19 +22,19 @@ module Hare
     end
 
     def cleanup
-      @connection.try(:close)
-      set_status("off") if @connection.nil?
+      @connection.close
+      set_status "off"
     end
 
     def capture_signals
-      trap('TERM') { close }
-      trap('INT') { close }
+      trap('TERM') { close('TERM') }
+      trap('INT') { close('INT') }
     end
 
-    def close
+    def close(signal='TERM')
       say 'Exiting...'
       cleanup
-      exit
+      raise SignalException.new(signal)
     end
 
     def open_connection
