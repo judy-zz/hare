@@ -34,6 +34,7 @@ describe Hare::Server do
   describe "#capture_signals" do
     it "captures 'TERM'" do
       pid = fork do
+        # FIXME: This doesn't actually test cleanup, because it's run in a fork
         expect(@server).to receive(:cleanup)
         @server.start
       end
@@ -43,6 +44,7 @@ describe Hare::Server do
 
     it "captures 'INT'" do
       pid = fork do
+        # FIXME: This doesn't actually test cleanup, because it's run in a fork
         expect(@server).to receive(:cleanup)
         @server.start
       end
