@@ -27,18 +27,14 @@ END
     def daemonize
       dir = @options[:pid_dir]
       Dir.mkdir(dir) unless File.exists?(dir)
-      process_name = "hare.#{@options[:identifier]}"
-      run_process(process_name, dir)
+      run_process(dir)
     end
 
-    def run_process(process_name, dir)
-      Daemons.run_proc(process_name, dir: dir, dir_mode: :normal, monitor: false, ARGV: @args) do |*args|
-        $0 = File.join(@options[:prefix], process_name) if @options[:prefix]
-        run process_name
-      end
+    def run_process(dir)
+      Daemons.run_proc("hare", dir: dir, dir_mode: :normal, monitor: false, ARGV: @args) {|*args| run }
     end
 
-    def run(worker_name = nil)
+    def run
       Dir.chdir(Rails.root)
       server = Hare::Server.new
       server.start

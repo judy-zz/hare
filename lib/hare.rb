@@ -4,5 +4,6 @@ require 'bunny'
 
 require 'hare/logger'
 require 'hare/server'
+require 'hare/command'
 require 'hare/railtie'
 require 'hare/version'
