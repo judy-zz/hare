@@ -1,6 +1,8 @@
+require 'rails/generators'
+
 module Hare
-  class InstallGenerator < Rails::Generators::NamedBase
-    source_root File.expand_path('../../../templates', __FILE__)
+  class InstallGenerator < Rails::Generators::Base
+    self.source_paths << File.join(File.dirname(__FILE__), 'templates')
 
     def create_executable_file
       template "hare", Rails.root + "bin"
