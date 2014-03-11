@@ -24,7 +24,6 @@ module Hare
     end
 
     def close(signal='TERM')
-      say 'Exiting...'
       cleanup
       raise SignalException.new(signal)
     end

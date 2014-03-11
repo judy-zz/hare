@@ -39,7 +39,6 @@ END
       server = Hare::Server.new
       server.start
     rescue => e
-      Rails.logger.fatal e
       STDERR.puts e.message
       exit 1
     end
