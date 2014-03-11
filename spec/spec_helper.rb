@@ -16,7 +16,6 @@ end
 # This loads the dummy Rails environment.
 require File.expand_path('../dummy/config/environment', __FILE__)
 
-require 'helpers/sub_process'
 require 'hare'
 require 'timecop'
 
