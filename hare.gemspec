@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'railties', '~> 4.0'
   s.add_dependency 'bunny', '~> 1.1.3'
+  s.add_dependency 'daemons', '~> 1.1'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rails', '~> 4.0.3'
