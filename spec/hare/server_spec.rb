@@ -16,21 +16,6 @@ describe Hare::Server do
     end
   end
 
-  describe "#say" do
-    it "sends the message to standard out if @quiet is false" do
-      @server.instance_variable_set(:@quiet, false)
-      expect(STDOUT).to receive(:puts).with("test")
-      @server.say("test")
-    end
-
-    it "sends the message to the log file" do
-      Timecop.freeze do
-        expect(Rails.logger).to receive(:add).with(1, "#{Time.now.strftime('%FT%T%z')}: test")
-        @server.say("test")
-      end
-    end
-  end
-
   describe "#capture_signals" do
     it "captures 'TERM'" do
       pid = fork do

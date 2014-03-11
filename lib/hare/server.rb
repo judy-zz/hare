@@ -1,24 +1,16 @@
-require 'logger'
-
 module Hare
   class Server
-    DEFAULT_LOG_LEVEL = Logger::INFO
+    include Hare::Logger
     attr_reader :status, :connection, :quiet
 
     def initialize
       @status = "off"
-      @logger = Rails.logger
       @quiet = true
     end
 
     def set_status(string)
       @status = string
       say "Status changed to #{@status}"
-    end
-
-    def say(text, level = DEFAULT_LOG_LEVEL)
-      puts text unless quiet
-      @logger.add level, "#{Time.now.strftime('%FT%T%z')}: #{text}"
     end
 
     def cleanup
@@ -40,6 +32,7 @@ module Hare
     def open_connection
       @connection ||= Bunny.new
       @connection.start
+      say "Connection open."
     end
 
     def start

@@ -40,7 +40,6 @@ END
 
     def run(worker_name = nil)
       Dir.chdir(Rails.root)
-      Hare::Server.logger ||= Logger.new(File.join(Rails.root, 'log', 'hare.log'))
       server = Hare::Server.new
       server.start
     rescue => e
