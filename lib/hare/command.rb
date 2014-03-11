@@ -27,10 +27,6 @@ END
     def daemonize
       dir = @options[:pid_dir]
       Dir.mkdir(dir) unless File.exists?(dir)
-      run_process(dir)
-    end
-
-    def run_process(dir)
       Daemons.run_proc("hare", dir: dir, dir_mode: :normal, monitor: false, ARGV: @args) {|*args| run }
     end
 
