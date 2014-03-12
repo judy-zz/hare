@@ -13,6 +13,7 @@ module Hare
     def create_amqp_config_file
       filepath = Rails.root + "config"
       template "amqp.yml.sample", filepath + "amqp.yml.sample"
+      append_file Rails.root + '.gitignore', 'config/amqp.yml'
     end
   end
 end
