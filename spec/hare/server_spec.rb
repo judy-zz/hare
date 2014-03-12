@@ -1,5 +1,8 @@
 describe Hare::Server do
-  before { @server = Hare::Server.new }
+  before do
+    @server = Hare::Server.new
+    @server.config = {host: "localhost"}
+  end
   describe '#status' do
     context 'when the server is started' do
       it "returns 'started'" do
