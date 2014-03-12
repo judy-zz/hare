@@ -1,19 +1,17 @@
+# Refer to Bunny's new connection parameters for settings here.
+# http://rubybunny.info/articles/connecting.html
+
 defaults: &defaults
-  logging: false
-  connection_timeout: 5
   host: localhost
   port: 5672
-  exchange: "agrian.topic"
-  heartbeat: 1
+  ssl: false
+  vhost: /
   user: guest
   pass: guest
-
-test:
-  <<: *defaults
-  vhost: "/agrian-test"
-  exchange: "agrian-test.topic"
+  heartbeat: :server
 
 development:
   <<: *defaults
-  vhost: "/agrian-development"
-  exchange: "agrian-development.topic"
+
+test:
+  <<: *defaults
