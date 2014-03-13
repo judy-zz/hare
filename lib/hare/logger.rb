@@ -10,7 +10,7 @@ module Hare
     end
 
     def say(text, level = DEFAULT_LOG_LEVEL)
-      puts text unless @quiet
+      puts text if @loud
       logger.add level, text
     end
   end

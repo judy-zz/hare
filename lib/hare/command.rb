@@ -32,8 +32,7 @@ END
 
     def run
       Dir.chdir(Rails.root)
-      server = Hare::Server.new
-      server.start
+      Hare::Server.start
     rescue => e
       STDERR.puts e.message
       exit 1

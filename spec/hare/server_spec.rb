@@ -1,20 +1,20 @@
 describe Hare::Server do
   before do
-    @server = Hare::Server.new
+    @server = Class.new(Hare::Server)
     @server.config = {host: "localhost"}
   end
   describe '#status' do
+    context 'when the server is not started' do
+      it "returns 'off'" do
+        expect(@server.status).to eql "off"
+      end
+    end
     context 'when the server is started' do
       it "returns 'started'" do
         thread = Thread.new { @server.start }
         sleep(0.1)
         expect(@server.status).to eql "started"
         thread.kill
-      end
-    end
-    context 'when the server is not started' do
-      it "returns 'off'" do
-        expect(@server.status).to eql "off"
       end
     end
   end
