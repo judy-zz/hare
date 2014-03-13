@@ -8,7 +8,9 @@ Put this in your `Gemfile`:
 
     gem 'hare'
 
-Then run `bundle install` to install the gem and its dependencies. Finally, run `rails generate hare:install` to create a hare initializer and an amqp.yml file in your config folder.
+Then run `bundle install` to install the gem and its dependencies. Finally, run `rails generate hare:install` to create a hare initializer and an amqp.yml.sample file in your config folder.
+
+Copy amqp.yml.sample to amqp.yml, and change it to connect to your local RabbitMQ server. By default, it will connect to the one on your development machine, as long as you haven't changed the settings on it.
 
 ---
 
