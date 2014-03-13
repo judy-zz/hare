@@ -34,14 +34,14 @@ describe Hare::Message do
   end
 
   describe "#send" do
-    it "should raise an error if nothing is defined" do
+    it "raises an error if nothing is defined" do
       dummy_class = Class.new(Hare::Message)
 
       message = dummy_class.new("test")
       expect{message.send}.to raise_error
     end
 
-    it "should send a message to the default exchange" do
+    it "sends a message to the default exchange" do
       dummy_class = Class.new(Hare::Message) do
         routing_key "testkey"
       end
@@ -60,7 +60,7 @@ describe Hare::Message do
       expect(result).to eql('"test"')
     end
 
-    it "should send a message to a named exchange" do
+    it "sends a message to a named exchange" do
       dummy_class = Class.new(Hare::Message) do
         exchange "direct-test-exchange", type: :direct
       end
