@@ -1,18 +1,15 @@
 class Hare::Message
   class << self
-    def exchange(exchange=nil)
-      if exchange.present?
-        @exchange = exchange
-      else
-        @exchange || :default_exchange
-      end
+    def channel
+      Hare::Server.channel
     end
 
-    def queue(queue=nil)
-      if queue.present?
-        @queue = queue
+    def exchange(exchange=nil, type: :fanout)
+      if exchange.present?
+        @type = type
+        @exchange = channel.exchange(exchange, type: type)
       else
-        @queue
+        @exchange || channel.default_exchange
       end
     end
 
@@ -31,8 +28,31 @@ class Hare::Message
     @data = data || {}
   end
 
+  def channel
+    self.class.channel
+  end
+
+  def exchange
+    self.class.exchange
+  end
+
+  def routing_key
+    self.class.routing_key
+  end
+
+  def json
+    data.present? ? data.to_json : {}.to_json
+  end
+
   def send
-    json = data.to_json
-    Hare::Server.channel.default_exchange.publish(json, routing_key: self.class.queue)
+    if exchange.name == ""
+      if routing_key.present?
+        exchange.publish(json, routing_key: routing_key)
+      else
+        raise "Routing key must be set (so we know what queue to send your message to.)"
+      end
+    else
+      exchange.publish(json, routing_key: routing_key)
+    end
   end
 end
