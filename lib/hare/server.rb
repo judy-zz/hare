@@ -16,7 +16,7 @@ module Hare
       end
 
       def cleanup
-        @connection.close
+        @connection.try(:close)
         set_status "off"
       end
 
