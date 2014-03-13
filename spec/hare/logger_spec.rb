@@ -7,8 +7,8 @@ describe Hare::Logger do
   end
 
   describe "#say" do
-    it "sends the message to standard out if @quiet is false" do
-      @dummy_class.instance_variable_set(:@quiet, false)
+    it "sends the message to standard out if @loud is true" do
+      @dummy_class.instance_variable_set(:@loud, true)
       expect(STDOUT).to receive(:puts).with("test")
       @dummy_class.say("test")
     end

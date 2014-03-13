@@ -1,4 +1,5 @@
 describe Hare::Message do
+
   describe ".exchange" do
     it "sets and returns the exchange variable" do
       dummy_class = Class.new(Hare::Message) do
@@ -30,9 +31,33 @@ describe Hare::Message do
     end
   end
   describe "#send" do
-    it "should send a message" do
-      message = Hare::Message.new
-      message.send
+    before(:all) do
+      Hare::Server.config = {host: "localhost"}
+      Thread.new { Hare::Server.start }
+      sleep(0.1)
+    end
+
+    after(:all) do
+      Hare::Server.stop
+    end
+    context 'with no exchange defined' do
+      it "should send a message to the default exchange" do
+        dummy_class = Class.new(Hare::Message) do
+          queue "testqueue"
+        end
+
+        message = dummy_class.new("test")
+        expect(message.send) == true
+        result = nil
+
+        q = Hare::Server.channel.queue("testqueue")
+        q.subscribe do |delivery_info, properties, body|
+          result = body
+        end
+
+        sleep(0.5) # Give time for the subscription to receive the message.
+        expect(result).to eql('"test"')
+      end
     end
   end
 end

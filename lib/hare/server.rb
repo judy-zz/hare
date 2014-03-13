@@ -3,8 +3,8 @@ module Hare
     class << self
       include Hare::Logger
 
-      attr_reader :connection, :channel, :loud
-      attr_accessor :config
+      attr_reader :connection, :channel
+      attr_accessor :config, :loud
 
       def set_status(string)
         @status = string

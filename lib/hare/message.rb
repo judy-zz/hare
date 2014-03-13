@@ -25,7 +25,14 @@ class Hare::Message
     end
   end
 
+  attr_accessor :data
+
+  def initialize(data=nil)
+    @data = data || {}
+  end
+
   def send
-    
+    json = data.to_json
+    Hare::Server.channel.default_exchange.publish(json, routing_key: self.class.queue)
   end
 end
