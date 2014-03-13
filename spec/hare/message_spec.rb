@@ -65,7 +65,7 @@ describe Hare::Message do
         exchange "direct-test-exchange", type: :direct
       end
 
-      q = Hare::Server.channel.queue("key")
+      q = Hare::Server.channel.queue("")
       q.bind("direct-test-exchange")
       message = dummy_class.new("data")
       message.send
