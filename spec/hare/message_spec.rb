@@ -56,7 +56,7 @@ describe Hare::Message do
         result = body
       end
 
-      sleep(0.5) # Give time for the subscription to receive the message.
+      sleep(0.1)
       expect(result).to eql('"test"')
     end
 
@@ -75,7 +75,7 @@ describe Hare::Message do
         result = body
       end
 
-      sleep(0.5) # Give time for the subscription to receive the message.
+      sleep(0.1)
       expect(result).to eql('"data"')
     end
   end
