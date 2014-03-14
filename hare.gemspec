@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rails', '~> 4.0.3'
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec', '~> 3.0.0'
+  s.add_development_dependency 'rspec', '3.0.0.beta2'
   s.add_development_dependency 'guard'
   s.add_development_dependency 'guard-rspec'
   s.add_development_dependency 'guard-livereload'
