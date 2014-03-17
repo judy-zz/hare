@@ -6,4 +6,4 @@ Example:
 
     This will create:
         config/amqp.yml
-        config/initializers/hare.rb
+        bin/hare
