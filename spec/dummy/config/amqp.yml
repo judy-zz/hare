@@ -1,0 +1,14 @@
+defaults: &defaults
+  logging: false
+  connection_timeout: 3
+  host: localhost
+  port: 5672
+  heartbeat: 1
+  user: guest
+  pass: guest
+
+test:
+  <<: *defaults
+
+development:
+  <<: *defaults

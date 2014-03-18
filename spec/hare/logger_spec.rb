@@ -15,7 +15,7 @@ describe Hare::Logger do
 
     it "sends the message to the log file" do
       Timecop.freeze do
-        expect(@dummy_class.logger).to receive(:add).with(1, "test")
+        expect(@dummy_class.logger).to receive(:add).with(1, "HARE: test")
         @dummy_class.say("test")
       end
     end

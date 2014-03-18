@@ -18,7 +18,6 @@ require File.expand_path('../dummy/config/environment', __FILE__)
 
 require 'hare'
 require 'timecop'
-require 'helpers/capture_output'
 
 RSpec.configure do |config|
   if config.files_to_run.one?

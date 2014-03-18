@@ -1,9 +1,8 @@
 Description:
-    This generator installs the necessary files to get Hare going.
+    This generator installs a config file so Hare knows how to connect to RabbitMQ.
 
 Example:
     rails generate hare
 
     This will create:
         config/amqp.yml
-        bin/hare

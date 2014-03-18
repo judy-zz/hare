@@ -6,12 +6,12 @@ module Hare
     DEFAULT_LOG_LEVEL = ::Logger::INFO
 
     def logger
-      @logger ||= ::Logger.new(File.join(Rails.root, 'log', 'hare.log'))
+      @logger ||= Rails.logger
     end
 
     def say(text, level = DEFAULT_LOG_LEVEL)
       puts text if @loud
-      logger.add level, text
+      logger.add level, "HARE: #{text}"
     end
   end
 end

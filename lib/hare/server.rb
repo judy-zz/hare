@@ -20,19 +20,9 @@ module Hare
         set_status "off"
       end
 
-      def capture_signals
-        trap('TERM') { close('TERM') }
-        trap('INT') { close('INT') }
-      end
-
       def load_config
         @config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + "config/amqp.yml"))[Rails.env]
         say "Loaded config."
-      end
-
-      def close(signal='TERM')
-        cleanup
-        raise SignalException.new(signal)
       end
 
       def open_connection
@@ -53,15 +43,10 @@ module Hare
 
       def start
         set_status "starting"
-        capture_signals
         load_config unless @config.present?
         open_connection
         open_channel
         set_status "started"
-
-        loop do
-          sleep(5.0)
-        end
       end
 
       def stop
