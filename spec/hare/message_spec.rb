@@ -47,12 +47,12 @@ describe Hare::Message do
       end
 
       # Queue must be defined first!
-      q = Hare::Server.channel.queue("testkey")
+      # q = Hare::Server.channel.queue("testkey")
       message = dummy_class.new("test")
       message.send
       result = nil
 
-      q.subscribe do |delivery_info, properties, body|
+      Hare::Server.channel.queue("testkey").subscribe do |delivery_info, properties, body|
         result = body
       end
 

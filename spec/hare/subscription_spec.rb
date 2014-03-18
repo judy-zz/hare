@@ -11,12 +11,12 @@ describe Hare::Subscription do
   describe ".subscribe" do
     it "watches a queue" do
       result = nil
-      Hare::Subscription.subscribe queue: "test" do |data|
+      Hare::Subscription.subscribe queue: "subscription.test.queue" do |data|
         result = data[:string]
       end
       Hare::Server.channel.default_exchange.publish(
         {string: "success"}.to_json,
-        routing_key: "test"
+        routing_key: "subscription.test.queue"
       )
 
       sleep(0.1)

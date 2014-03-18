@@ -16,10 +16,15 @@ module Hare
 
       def routing_key(routing_key=nil)
         if routing_key.present?
+          verify_queue(routing_key)
           @routing_key = routing_key
         else
           @routing_key
         end
+      end
+
+      def verify_queue(routing_key)
+        Hare::Server.channel.queue(routing_key)
       end
     end
 
@@ -27,10 +32,6 @@ module Hare
 
     def initialize(data=nil)
       @data = data || {}
-    end
-
-    def channel
-      self.class.channel
     end
 
     def exchange
