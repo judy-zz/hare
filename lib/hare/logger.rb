@@ -1,11 +1,11 @@
 require 'logger'
 
 module Hare
-  # Set up log/hare.log, and (condionally) send messages there and to stdout.
   module Logger
     DEFAULT_LOG_LEVEL = ::Logger::INFO
 
     def logger
+      Rails.logger ||= ::Logger.new(STDOUT)
       @logger ||= Rails.logger
     end
 
