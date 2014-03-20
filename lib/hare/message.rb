@@ -1,11 +1,25 @@
 module Hare
+  # <tt>Hare::Message</tt> allows you to send messages to RabbitMQ, and have
+  # your exchanges and bindings set up on the fly. Example:
+  #
+  #   # app/messages/user_message.rb
+  #   class UserMessage < Hare::Message
+  #     exchange "user.exchange"
+  #   end
+  #
+  #   message = UserMessage.new("data")
+  #   message.send
+  #
+  # Messages are encapsulated in JSON format. If you use
+  # <tt>Hare::Subscription</tt> to receive messages, they're automatically
+  # parsed back out of JSON into native Ruby objects.
   class Message
     class << self
       def channel
         Hare::Server.channel
       end
 
-      def exchange(exchange=nil, type: :direct)
+      def exchange(exchange = nil, type: :direct)
         if exchange.present?
           @type = type
           @exchange = channel.exchange(exchange, type: type)
@@ -14,7 +28,7 @@ module Hare
         end
       end
 
-      def routing_key(routing_key=nil)
+      def routing_key(routing_key = nil)
         if routing_key.present?
           verify_queue(routing_key)
           @routing_key = routing_key
@@ -30,7 +44,7 @@ module Hare
 
     attr_accessor :data
 
-    def initialize(data=nil)
+    def initialize(data = nil)
       @data = data || {}
     end
 
@@ -47,11 +61,11 @@ module Hare
     end
 
     def send
-      if exchange.name == ""
+      if exchange.name == ''
         if routing_key.present?
           exchange.publish(json, routing_key: routing_key)
         else
-          raise "Routing key must be set (so we know what queue to send your message to.)"
+          fail 'Routing key must be set when using default exchange.'
         end
       else
         exchange.publish(json, routing_key: routing_key)

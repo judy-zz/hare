@@ -1,6 +1,7 @@
 require 'logger'
 
 module Hare
+  # Simplifies sending messages to standard output and/or the Rails log files.
   module Logger
     DEFAULT_LOG_LEVEL = ::Logger::INFO
 
