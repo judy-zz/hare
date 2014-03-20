@@ -1,14 +1,4 @@
 describe Hare::Message do
-  before(:all) do
-    Hare::Server.config = {host: "localhost"}
-    Hare::Server.start
-    sleep(0.1)
-  end
-
-  after(:all) do
-    Hare::Server.stop
-  end
-
   describe ".exchange" do
     it "sets and returns the exchange" do
       dummy_class = Class.new(Hare::Message) do
