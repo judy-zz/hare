@@ -1,11 +1,15 @@
 require 'rails/generators'
 
 module Hare
+  # <tt>Hare::SubscriptionGenerator</tt> generates a subscription file, for
+  # example:
+  #
+  #   rails generate subscription user_notification
   class SubscriptionGenerator < Rails::Generators::NamedBase
     source_root File.expand_path('../templates', __FILE__)
 
-    def create_message_file
-      subscriptions_folder = Rails.root + "app/subscriptions"
+    def create_subscription_file
+      subscriptions_folder = Rails.root + 'app/subscriptions'
       empty_directory subscriptions_folder
       template 'subscription.rb', subscriptions_folder + "#{file_name}_subscription.rb"
     end
