@@ -46,8 +46,6 @@ describe Hare::Message do
         routing_key "testkey"
       end
 
-      # Queue must be defined first!
-      # q = Hare::Server.channel.queue("testkey")
       message = dummy_class.new("test")
       message.send
       result = nil
