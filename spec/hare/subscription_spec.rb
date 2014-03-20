@@ -1,7 +1,7 @@
 describe Hare::Subscription do
   before(:all) do
     Hare::Server.config = {host: "localhost"}
-    Thread.new { Hare::Server.start }
+    Hare::Server.start
     sleep(0.1)
   end
 
