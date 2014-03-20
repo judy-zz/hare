@@ -1,10 +1,12 @@
-# Hare
+Hare
+====
 
 A Rails plugin that makes it easier for your models to communicate with RabbitMQ.
 
 Hare abstracts away queue and exchange creation, so you can focus on the message and subscription side of things in Rails.
 
-## Installation
+Installation
+------------
 
 Put this in your `Gemfile`:
 
@@ -14,7 +16,8 @@ Then run `bundle install` to install the gem and its dependencies. Finally, run 
 
 Copy amqp.yml.sample to amqp.yml, and change it to connect to your local RabbitMQ server. By default, it will connect to the one on your development machine, as long as you haven't changed the settings on it.
 
-## Sending Messages
+Sending Messages
+----------------
 
 Run the generator:
 
@@ -26,7 +29,8 @@ Then specify the name of the exchange, OR the routing key for the intended queue
     msg.data = {key: "value"}
     msg.send
 
-## Receiving messages
+Receiving messages
+------------------
 
 Generate a subscription with this command:
 
