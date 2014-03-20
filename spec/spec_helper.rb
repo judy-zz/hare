@@ -1,17 +1,20 @@
 ENV['RAILS_ENV'] ||= 'test'
 
+# SimpleCov for offline code coverage generation.
 require 'simplecov'
 original_process = Process.pid
 
 SimpleCov.start do
-  add_filter "spec/dummy"
+  add_filter 'spec/dummy'
 end
 
 SimpleCov.at_exit do
-  if Process.pid == original_process
-    SimpleCov.result.format!
-  end
+  SimpleCov.result.format! if Process.pid == original_process
 end
+
+# Coveralls for online code coverage generation.
+require 'coveralls'
+Coveralls.wear!
 
 # This loads the dummy Rails environment.
 require File.expand_path('../dummy/config/environment', __FILE__)
