@@ -7,7 +7,6 @@ rvm:
 branches:
   only:
     - master
-    - travis
 
 before_install:
   - sudo add-apt-repository "deb http://www.rabbitmq.com/debian/ testing main"
