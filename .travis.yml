@@ -2,11 +2,11 @@ language: ruby
 rvm:
   - "2.1.0"
   - "2.0.0"
-  - rbx
+  - rbx-2.2.6
 
 branches:
   only:
     - master
 
 services:
-  - rabbitmq # will start rabbitmq-server
+  - rabbitmq
