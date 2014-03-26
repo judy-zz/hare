@@ -8,9 +8,5 @@ branches:
   only:
     - master
 
-before_install:
-  - sudo add-apt-repository "deb http://www.rabbitmq.com/debian/ testing main"
-  - wget http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
-  - sudo apt-key add rabbitmq-signing-key-public.asc
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq rabbitmq-server
+services:
+  - rabbitmq # will start rabbitmq-server
