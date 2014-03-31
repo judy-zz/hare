@@ -19,12 +19,18 @@ module Hare
         Hare::Server.channel
       end
 
-      def exchange(exchange = nil, type: :direct)
-        if exchange.present?
+      def exchange(name=nil, type: :direct)
+        if name.present?
           @type = type
-          @exchange = channel.exchange(exchange, type: type)
+          @exchange = channel.exchange(name, type: type)
         else
           @exchange || channel.default_exchange
+        end
+      end
+
+      [:direct, :fanout, :topic].each do |type|
+        define_method type do |name|
+          exchange(name, type: type)
         end
       end
 

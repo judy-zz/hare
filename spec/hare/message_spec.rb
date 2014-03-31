@@ -48,6 +48,25 @@ describe Hare::Message do
       expect(result).to eql('"test"')
     end
 
+    it 'sends a message to a fanout exchange' do
+      dummy_class = Class.new(Hare::Message) do
+        fanout 'fanning_out'
+      end
+
+      q = Hare::Server.channel.queue('')
+      q.bind('fanning_out')
+      message = dummy_class.new('data')
+      message.send
+      result = nil
+
+      q.subscribe do |delivery_info, properties, body|
+        result = body
+      end
+
+      sleep(0.1)
+      expect(result).to eql('"data"')
+    end
+
     it 'sends a message to a named exchange' do
       dummy_class = Class.new(Hare::Message) do
         exchange 'direct-test-exchange', type: :direct
