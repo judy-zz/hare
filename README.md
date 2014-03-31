@@ -3,7 +3,7 @@ Hare
 
 A Rails plugin that makes it easier for your models to communicate with RabbitMQ.
 
-[![Build Status](https://travis-ci.org/judy/hare.svg?branch=travis)](https://travis-ci.org/judy/hare)
+[![Build Status](https://travis-ci.org/judy/hare.svg?branch=master)](https://travis-ci.org/judy/hare)
 [![Code Climate](https://codeclimate.com/github/judy/hare.png)](https://codeclimate.com/github/judy/hare)
 [![Coverage Status](https://coveralls.io/repos/judy/hare/badge.png)](https://coveralls.io/r/judy/hare)
 
