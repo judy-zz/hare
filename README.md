@@ -33,6 +33,14 @@ Then specify the name of the exchange, OR the routing key for the intended queue
     msg.data = {key: "value"}
     msg.send
 
+You can also specify the type of exchange you want to create, like so:
+
+    class WeatherMessage < Hare::Message
+        fanout "reports"
+    end
+
+Remember to use [RabbitMQ's documentation](http://www.rabbitmq.com/documentation.html) to understand the rules governing how to use different types of exchanges, bindings, and queues appropriately. You don't have to create those things ahead of time with Hare, but you do have to understand how they work!
+
 Receiving messages
 ------------------
 
@@ -48,8 +56,6 @@ Then tweak the resulting file to attach to the right queue, or use bindings to w
       end
     end
 
-**FYI, this gem does not yet officially support fanout or topic exchanges.** They shouldn't be hard to add to the gem, but there aren't any tests yet.
-
 ---
 
-This project uses the ISC license.
+This project was written by [Clinton Judy](http://judy.github.io), and uses the ISC license.
