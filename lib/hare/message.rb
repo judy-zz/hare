@@ -50,8 +50,9 @@ module Hare
 
     attr_accessor :data
 
-    def initialize(data = nil)
+    def initialize(data = nil, routing_key: nil)
       @data = data || {}
+      @routing_key = routing_key
     end
 
     def exchange
@@ -59,7 +60,11 @@ module Hare
     end
 
     def routing_key
-      self.class.routing_key
+      @routing_key || self.class.routing_key
+    end
+
+    def routing_key=(routing_key)
+      @routing_key = routing_key
     end
 
     def json
