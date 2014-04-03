@@ -85,5 +85,35 @@ describe Hare::Message do
       sleep(0.1)
       expect(result).to eql('"data"')
     end
+    context "with a topic exchange" do
+      before(:each) do
+        @dummy_class = Class.new(Hare::Message) do
+          topic "topic_exchange"
+          routing_key "prefix.middle.suffix"
+        end
+        @q = Hare::Server.channel.queue('')
+        @ex = @dummy_class.class_eval{exchange}
+        @result = nil
+      end
+
+      after(:each) do
+        @q.subscribe {|_, _, body| @result = body }
+        @dummy_class.new('data').send
+        sleep(0.1)
+        expect(@result).to eql('"data"')
+      end
+
+      it "should match a full topic" do
+        @q.bind @ex, routing_key: "prefix.middle.suffix"
+      end
+
+      it "should match a prefix" do
+        @q.bind @ex, routing_key: "prefix.#"
+      end
+
+      it "should match a suffix" do
+        @q.bind @ex, routing_key: "#.suffix"
+      end
+    end
   end
 end
