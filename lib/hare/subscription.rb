@@ -17,6 +17,8 @@ module Hare
   # messages into JSON to make the process easier.
   class Subscription
     class << self
+      include Hare::Logger
+
       def channel
         Hare::Server.channel
       end
@@ -52,6 +54,9 @@ module Hare
       def format_data(body)
         obj = JSON.parse(body)
         HashWithIndifferentAccess.new(obj)
+      rescue
+        say "JSON data wasn't received, returning plain object"
+        body
       end
     end
   end
