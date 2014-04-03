@@ -24,12 +24,20 @@ module Hare
       def subscribe(queue:'', bind:nil, &blk)
         queue = channel.queue(queue)
         if bind.present?
-          channel.exchange(bind, type: :direct)
+          ensure_exchange_exists(bind)
           queue.bind(bind)
         end
         queue.subscribe do |delivery_info, properties, body|
           data = HashWithIndifferentAccess.new(JSON.parse(body))
           yield(data)
+        end
+      end
+
+    private
+
+      def ensure_exchange_exists(bind)
+        unless channel.exchanges.keys.find_index(bind)
+          channel.exchange(bind, type: :direct)
         end
       end
     end
