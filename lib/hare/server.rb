@@ -39,11 +39,19 @@ module Hare
         set_status 'off'
       end
 
+      def config_file_location
+        Rails.root + 'config/amqp.yml'
+      end
+
       def load_config
-        @config = HashWithIndifferentAccess.new(
-          YAML.load_file(Rails.root + 'config/amqp.yml')
-        )[Rails.env]
-        say 'Loaded config.'
+        if Pathname.new(config_file_location).exist?
+          @config = HashWithIndifferentAccess.new(
+            YAML.load_file(config_file_location)
+          )[Rails.env]
+          say 'Loaded config.'
+        else
+          say 'amqp.yml not found! Not loading any configuration'
+        end
       end
 
       def open_connection
