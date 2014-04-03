@@ -8,6 +8,7 @@ module Hare
   class Railtie < Rails::Railtie
     initializer 'hare' do
       Hare::Server.start
+      sleep(1) # Give time for server to connect.
 
       matcher = /\A#{Regexp.escape(Rails.root.to_s)}\/(.*)\.rb\Z/
       eagerloads = []
