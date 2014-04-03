@@ -22,14 +22,22 @@ module Hare
       end
 
       def subscribe(queue:'', bind:nil, &blk)
-        queue = channel.queue(queue)
+        create_queue(queue)
+        create_binding(bind)
+        @queue.subscribe do |delivery_info, properties, body|
+          yield format_data(body)
+        end
+      end
+
+      # This creates a random queue if the queue supplied is an empty string.
+      def create_queue(queue)
+        @queue = channel.queue(queue)
+      end
+
+      def create_binding(bind)
         if bind.present?
           ensure_exchange_exists(bind)
-          queue.bind(bind)
-        end
-        queue.subscribe do |delivery_info, properties, body|
-          data = HashWithIndifferentAccess.new(JSON.parse(body))
-          yield(data)
+          @queue.bind(bind)
         end
       end
 
@@ -39,6 +47,11 @@ module Hare
         unless channel.exchanges.keys.find_index(bind)
           channel.exchange(bind, type: :direct)
         end
+      end
+
+      def format_data(body)
+        obj = JSON.parse(body)
+        HashWithIndifferentAccess.new(obj)
       end
     end
   end
