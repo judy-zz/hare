@@ -10,14 +10,12 @@ module Hare
       Hare::Server.start
       sleep(1) # Give time for server to connect.
 
-      matcher = /\A#{Regexp.escape(Rails.root.to_s)}\/(.*)\.rb\Z/
       eagerloads = []
       eagerloads.concat(Dir.glob("#{Rails.root}/app/messages/**/*.rb"))
       eagerloads.concat(Dir.glob("#{Rails.root}/app/subscriptions/**/*.rb"))
 
-      eagerloads.sort.each do |file|
-        require_dependency file.sub(matcher, '\1')
-      end
+      # TODO: I'd love to use `require_dependency` here instead, but it's doing something weird when reloading subscriptions. We might be able to close and re-open the channel before every server request, so subscription objects don't collide (or whatever they're doing that keeps them from receiving messages.)
+      eagerloads.sort.each {|file| require file }
     end
   end
 end
