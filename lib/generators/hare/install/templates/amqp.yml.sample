@@ -9,6 +9,7 @@ defaults: &defaults
   user: guest
   pass: guest
   heartbeat: :server
+  threaded: true
 
 development:
   <<: *defaults
