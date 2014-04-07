@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     hare (0.3.0)
-      bunny (~> 1.1.4, ~> 1.1.2)
+      bunny (~> 1.1.8)
       daemons (~> 1.1)
       railties (~> 4.0)
 
@@ -38,7 +38,7 @@ GEM
     ast (1.1.0)
     atomic (1.1.16)
     builder (3.1.4)
-    bunny (1.1.7)
+    bunny (1.1.8)
       amq-protocol (>= 1.9.2)
     celluloid (0.15.2)
       timers (~> 1.1.0)
