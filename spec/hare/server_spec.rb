@@ -11,10 +11,9 @@ describe Hare::Server do
     end
     context 'when the server is started' do
       it "returns 'started'" do
-        thread = Thread.new { @server.start }
+        @server.start
         sleep(0.1)
         expect(@server.status).to eql 'started'
-        thread.kill
       end
     end
   end
@@ -31,11 +30,10 @@ describe Hare::Server do
 
   describe '.start' do
     it 'opens a connection to rabbitmq' do
-      thread = Thread.new { @server.start }
+      @server.start
       sleep(0.1)
       expect(@server.connection).to be_kind_of(Bunny::Session)
       expect(@server.channel).to be_kind_of(Bunny::Channel)
-      thread.kill
     end
   end
 end
