@@ -16,7 +16,7 @@ module Hare
   class Message
     class << self
       def channel
-        Hare::Server.channel
+        Hare::Server.channel or raise "Hare::Server.channel is not open"
       end
 
       def exchange(name=nil, type: :direct)

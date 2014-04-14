@@ -1,5 +1,6 @@
 require 'hare'
 require 'rails'
+require 'spring/configuration'
 
 module Hare
   # This Railtie starts a connection to RabbitMQ, and eagerly loads messages
@@ -7,7 +8,7 @@ module Hare
   # structures.
   class Railtie < Rails::Railtie
     initializer 'hare' do
-      Spring.after_fork do
+      ::Spring.after_fork do
         Hare::Server.start
         sleep(1) # Give time for server to connect.
 
