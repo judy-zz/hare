@@ -23,21 +23,21 @@ describe Hare::Message do
     end
   end
 
-  describe '#send' do
+  describe '#deliver' do
     it 'raises an error if nothing is defined' do
       dummy_class = Class.new(Hare::Message)
 
       message = dummy_class.new('test')
-      expect { message.send }.to raise_error
+      expect { message.deliver }.to raise_error
     end
 
-    it 'sends a message to the default exchange' do
+    it 'delivers a message to the default exchange' do
       dummy_class = Class.new(Hare::Message) do
         routing_key 'testkey'
       end
 
       message = dummy_class.new('test')
-      message.send
+      message.deliver
       result = nil
 
       Hare::Server.channel.queue('testkey').subscribe do |delivery_info, properties, body|
@@ -48,7 +48,7 @@ describe Hare::Message do
       expect(result).to eql('"test"')
     end
 
-    it 'sends a message to a fanout exchange' do
+    it 'delivers a message to a fanout exchange' do
       dummy_class = Class.new(Hare::Message) do
         fanout 'fanning_out'
       end
@@ -56,7 +56,7 @@ describe Hare::Message do
       q = Hare::Server.channel.queue('')
       q.bind('fanning_out')
       message = dummy_class.new('data')
-      message.send
+      message.deliver
       result = nil
 
       q.subscribe do |delivery_info, properties, body|
@@ -67,7 +67,7 @@ describe Hare::Message do
       expect(result).to eql('"data"')
     end
 
-    it 'sends a message to a named exchange' do
+    it 'delivers a message to a named exchange' do
       dummy_class = Class.new(Hare::Message) do
         exchange 'direct-test-exchange', type: :direct
       end
@@ -75,7 +75,7 @@ describe Hare::Message do
       q = Hare::Server.channel.queue('')
       q.bind('direct-test-exchange')
       message = dummy_class.new('data')
-      message.send
+      message.deliver
       result = nil
 
       q.subscribe do |delivery_info, properties, body|
@@ -98,7 +98,7 @@ describe Hare::Message do
 
       after(:each) do
         @q.subscribe {|_, _, body| @result = body }
-        @dummy_class.new('data').send
+        @dummy_class.new('data').deliver
         sleep(0.1)
         expect(@result).to eql('"data"')
       end
