@@ -27,3 +27,6 @@ spec/reports/
 .idea/*
 atlassian-ide-plugin.xml
 .project
+
+# Ignore, this being a gem.
+Gemfile.lock
