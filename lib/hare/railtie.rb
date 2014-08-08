@@ -9,8 +9,14 @@ module Hare
   class Railtie < Rails::Railtie
     initializer 'hare' do
       ::Spring.after_fork do
+
         Hare::Server.start
-        sleep(1) # Give time for server to connect.
+
+        connection_attempts = 1
+        while Hare::Server.status != 'started' && connection_attempts <= 5
+          sleep(connection_attempts) # Progressively sleep longer between connection attempts.
+          connection_attempts = connection_attempts + 1
+        end
 
         eagerloads = []
         eagerloads.concat(Dir.glob("#{Rails.root}/app/messages/**/*.rb"))

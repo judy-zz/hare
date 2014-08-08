@@ -71,7 +71,7 @@ module Hare
       data.present? ? data.to_json : {}.to_json
     end
 
-    def send
+    def deliver
       if exchange.name == ''
         if routing_key.present?
           exchange.publish(json, routing_key: routing_key)
