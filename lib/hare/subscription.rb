@@ -46,7 +46,7 @@ module Hare
     private
 
       def ensure_exchange_exists(bind)
-        unless channel.exchanges.keys.find_index(bind)
+        unless Hare::Server.connection.exchange_exists?(bind)
           channel.exchange(bind, type: :direct)
         end
       end
