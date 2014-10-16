@@ -31,7 +31,7 @@ Then specify the name of the exchange, OR the routing key for the intended queue
 
     msg = MessageName.new
     msg.data = {key: "value"}
-    msg.send
+    msg.deliver
 
 You can also specify the type of exchange you want to create, like so:
 
