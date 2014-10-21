@@ -9,6 +9,12 @@ A Rails plugin that makes it easier for your models to communicate with RabbitMQ
 
 Hare abstracts away queue and exchange creation, so you can focus on the message and subscription side of things in Rails.
 
+Prerequisites
+------------
+
+You'll need **RabbitMQ** installed. Find instructions for your platform [here](http://www.rabbitmq.com/download.html).
+
+
 Installation
 ------------
 
