@@ -36,11 +36,12 @@ describe Hare::Message do
         routing_key 'testkey'
       end
 
+      q = Hare::Server.channel.queue('testkey')
       message = dummy_class.new('test')
-      message.deliver
       result = nil
+      message.deliver
 
-      Hare::Server.channel.queue('testkey').subscribe do |delivery_info, properties, body|
+      q.subscribe do |delivery_info, properties, body|
         result = body
       end
 
