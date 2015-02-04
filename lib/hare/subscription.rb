@@ -23,8 +23,8 @@ module Hare
         Hare::Server.channel
       end
 
-      def subscribe(queue:'', bind:nil, &blk)
-        create_queue(queue)
+      def subscribe(queue:'', bind:nil, durable:false, &blk)
+        create_queue(queue, durable: durable)
         create_binding(bind)
         @queue.subscribe do |delivery_info, properties, body|
           yield format_data(body)
@@ -32,8 +32,8 @@ module Hare
       end
 
       # This creates a random queue if the queue supplied is an empty string.
-      def create_queue(queue)
-        @queue = channel.queue(queue)
+      def create_queue(queue, durable: false)
+        @queue = channel.queue(queue, durable: durable)
       end
 
       def create_binding(bind)

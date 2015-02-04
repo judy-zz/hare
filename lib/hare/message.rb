@@ -16,7 +16,7 @@ module Hare
   class Message
     class << self
       def channel
-        Hare::Server.channel or raise "Hare::Server.channel is not open"
+        Hare::Server.channel or fail 'Hare::Server.channel is not open'
       end
 
       def exchange(name=nil, type: :direct)
@@ -49,6 +49,7 @@ module Hare
     end
 
     attr_accessor :data
+    attr_writer :routing_key
 
     def initialize(data = nil, routing_key: nil)
       @data = data || {}
@@ -61,10 +62,6 @@ module Hare
 
     def routing_key
       @routing_key || self.class.routing_key
-    end
-
-    def routing_key=(routing_key)
-      @routing_key = routing_key
     end
 
     def json
