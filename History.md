@@ -1,6 +1,10 @@
 Changelog
 =========
 
+v0.5.0
+------
+- Add durable queues.
+
 v0.4.0
 ------
 - Update Bunny version to ~1.6.
