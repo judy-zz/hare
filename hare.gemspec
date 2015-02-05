@@ -23,6 +23,7 @@ DESC
   s.add_dependency 'bunny', '> 1.6'
   s.add_dependency 'daemons', '~> 1.1'
 
+  # All used for testing and code climate.
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rails', '~> 4.2'
   s.add_development_dependency 'rake'
@@ -33,4 +34,10 @@ DESC
   s.add_development_dependency 'timecop'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'rubocop'
+
+  # Documentation
+  s.add_development_dependency 'yard'
+  s.add_development_dependency 'redcarpet'
+  s.add_development_dependency 'github-markup'
+  s.add_development_dependency 'guard-yard'
 end

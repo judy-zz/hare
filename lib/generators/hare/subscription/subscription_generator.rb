@@ -8,6 +8,9 @@ module Hare
   class SubscriptionGenerator < Rails::Generators::NamedBase
     source_root File.expand_path('../templates', __FILE__)
 
+    # This method is called automatically by rails when you generate the
+    # subscription. It sets up the subscriptions folder, then adds the
+    # subscription to it.
     def create_subscription_file
       subscriptions_folder = Rails.root + 'app/subscriptions'
       empty_directory subscriptions_folder
