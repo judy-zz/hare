@@ -43,6 +43,14 @@ module Hare
         end
       end
 
+      def persistent
+        @persistent.nil? ? @persistent = true : @persistent
+      end
+
+      def transient
+        @persistent = false
+      end
+
       def verify_queue(routing_key)
         Hare::Server.channel.queue(routing_key)
       end
@@ -54,6 +62,7 @@ module Hare
     def initialize(data = nil, routing_key: nil)
       @data = data || {}
       @routing_key = routing_key
+      @persistent = persistent
     end
 
     def exchange
@@ -64,6 +73,10 @@ module Hare
       @routing_key || self.class.routing_key
     end
 
+    def persistent
+      @persistent.nil? ? self.class.persistent : @persistent
+    end
+
     def json
       data.present? ? data.to_json : {}.to_json
     end
@@ -71,7 +84,7 @@ module Hare
     def deliver
       if exchange.name == ''
         if routing_key.present?
-          exchange.publish(json, routing_key: routing_key)
+          exchange.publish(json, routing_key: routing_key, persistent: @persistent)
         else
           fail 'Routing key must be set when using default exchange.'
         end

@@ -23,6 +23,32 @@ describe Hare::Message do
     end
   end
 
+  describe '.persistent' do
+    it 'sets @persistent to true' do
+      dummy_class = Class.new(Hare::Message) do
+        persistent
+      end
+      expect(dummy_class.instance_variable_get(:@persistent)).to eql true
+    end
+
+    it 'returns the value of @persistent' do
+      dummy_class = Class.new(Hare::Message)
+      dummy_class.instance_variable_set(:@persistent, true)
+      expect(dummy_class.persistent).to eql true
+      dummy_class.instance_variable_set(:@persistent, false)
+      expect(dummy_class.persistent).to eql false
+    end
+  end
+
+  describe '.transient' do
+    it 'sets @persistent to false' do
+      dummy_class = Class.new(Hare::Message) do
+        transient
+      end
+      expect(dummy_class.instance_variable_get(:@persistent)).to eql false
+    end
+  end
+
   describe '#deliver' do
     it 'raises an error if nothing is defined' do
       dummy_class = Class.new(Hare::Message)
@@ -114,6 +140,57 @@ describe Hare::Message do
 
       it "should match a suffix" do
         @q.bind @ex, routing_key: "#.suffix"
+      end
+    end
+
+    context 'with persistence turned on' do
+      it 'should make messages persistent' do
+        Hare::Server.channel.queue('persistentqueue', durable: true)
+
+        dummy_class = Class.new(Hare::Message) do
+          routing_key 'persistentqueue'
+          persistent
+        end
+        result = nil
+
+        dummy_class.new('persistent').deliver
+
+        Hare::Server.stop
+        Hare::Server.start
+
+        Hare::Server.channel.queue('persistentqueue', durable: true).subscribe do |_, _, body|
+          result = body
+        end
+
+        sleep(0.1)
+        expect(result).to eql('"persistent"')
+      end
+    end
+
+    context 'with persistence turned off' do
+      it 'should make messages transient' do
+        Hare::Server.channel.queue('transientqueue', durable: true)
+
+        dummy_class = Class.new(Hare::Message) do
+          routing_key 'transientqueue'
+          transient
+        end
+        result = nil
+
+        msg = dummy_class.new('I am transient.')
+        msg.deliver
+
+        Hare::Server.stop
+        `rabbitmqctl stop_app`
+        `rabbitmqctl start_app`
+        Hare::Server.start
+
+        Hare::Server.channel.queue('transientqueue', durable: true).subscribe do |_, _, body|
+          result = body
+        end
+
+        sleep(0.1)
+        expect(result).to eql(nil)
       end
     end
   end
