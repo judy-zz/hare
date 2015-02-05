@@ -6,7 +6,7 @@ A Rails plugin that makes it easier for your models to communicate with RabbitMQ
 [![Build Status](https://travis-ci.org/judy/hare.svg?branch=master)](https://travis-ci.org/judy/hare)
 [![Code Climate](https://codeclimate.com/github/judy/hare.png)](https://codeclimate.com/github/judy/hare)
 [![Coverage Status](https://coveralls.io/repos/judy/hare/badge.png)](https://coveralls.io/r/judy/hare)
-[![Inline docs](http://inch-ci.org/github/judy/hare.png?branch=develop)](http://inch-ci.org/github/judy/hare)
+[![Inline docs](http://inch-ci.org/github/judy/hare.png?branch=master)](http://inch-ci.org/github/judy/hare)
 
 Hare abstracts away queue and exchange creation, so you can focus on the message and subscription side of things in Rails.
 
