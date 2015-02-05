@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v0.6.0
+------
+- Mark individual messages as persistent or transient.
+- Add better documentation throughout.
+
 v0.5.0
 ------
 - Add durable queues.
