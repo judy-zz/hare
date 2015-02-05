@@ -21,7 +21,12 @@ describe Hare::Subscription do
       # The queue must exist first before we send messages to it.
       Hare::Subscription.create_queue('subscription.test.durablequeue', durable: true)
 
-      # Kill connection to server to prove the queue stays alive
+      # Push the message
+      Hare::Server.channel.default_exchange.publish(
+        { string: 'success' }.to_json,
+        routing_key: 'subscription.test.durablequeue'
+      )
+
       Hare::Server.stop
       Hare::Server.start
 
@@ -29,12 +34,6 @@ describe Hare::Subscription do
       Hare::Subscription.subscribe queue: 'subscription.test.durablequeue', durable: true do |data|
         result = data[:string]
       end
-
-      # Push the message
-      Hare::Server.channel.default_exchange.publish(
-        { string: 'success' }.to_json,
-        routing_key: 'subscription.test.durablequeue'
-      )
 
       sleep(0.1)
       expect(result).to eql 'success'
